@@ -1,0 +1,61 @@
+<div class="d-flex flex-column min-vh-100">
+  <div class="px-2 flex-grow-1">
+    <div class="d-flex justify-content-center">
+      <p class="fs-5 mt-3">List of Kenyan Counties 🇰🇪</p>
+    </div>
+    <hr />
+    <div class="container-fluid">
+      <div class="row w-100">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 overflow-auto">
+          <div ngbAccordion [closeOthers]="true">
+            @for (county of counties; track county) {
+            <div ngbAccordionItem [collapsed]="county.name !== 'Baringo'" (click)="onCountySelected(county)">
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>{{ county.name }}</button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <ng-template>
+                    <p><strong>Capital:</strong> {{county.capital}}</p>
+                    <p><strong>Code:</strong> {{county.code}}</p>
+                    <p><strong>Subcounties ({{county.sub_counties.length}})</strong>:</p>
+                    <li *ngFor="let subcounty of county.sub_counties">{{subcounty}}</li>
+                    <div *ngIf="isSmallScreen" style="height: 340px;" leaflet [leafletOptions]="options"
+                      [leafletLayers]="baseLayers" (leafletMapReady)="onMapReady($event)">
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+          <!-- <div ngbAccordion [closeOthers]="true" #acc="ngbAccordion" activeIds="ngb-panel-0">
+            <div ngbAccordionItem *ngFor="let county of counties; let i = index" id="ngb-panel-{{i}}"
+              (click)="onCountySelected(county)">
+              <h2 ngbAccordionHeader>
+                <button ngbAccordionButton>{{county.name}}</button>
+              </h2>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <p><strong>Capital:</strong> {{county.capital}}</p>
+                  <p><strong>Code:</strong> {{county.code}}</p>
+                  <p><strong>Subcounties ({{county.sub_counties.length}})</strong>:</p>
+                  <li *ngFor="let subcounty of county.sub_counties">{{subcounty}}</li>
+                  <div *ngIf="isSmallScreen" style="height: 340px;" leaflet [leafletOptions]="options"
+                    [leafletLayers]="baseLayers" (leafletMapReady)="onMapReady($event)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+
+        <!-- Hide on smaller screens -->
+        <div class="col-md-6 col-lg-6 col-xl-6 d-none d-md-block" style="height: calc(100vh - 56px);" leaflet
+          [leafletOptions]="options" [leafletLayers]="baseLayers" (leafletMapReady)="onMapReady($event)">
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="bg-light text-center py-3">Developed by <a href="https://mondieki.com">// mondieki</a></footer>
+</div>

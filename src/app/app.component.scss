@@ -1,0 +1,8 @@
+.overflow-auto {
+  max-height: calc(100vh - 56px); /* Adjust based on your header/footer size */
+  overflow-y: auto;
+}
+
+footer {
+  width: 100%;
+}
